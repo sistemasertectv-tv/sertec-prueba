@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html {
+    color-scheme: dark;
+    background-color: #020617;
+  }
+  body {
+    @apply bg-slate-950 text-slate-200 antialiased selection:bg-blue-500/30;
+    background-color: #020617;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl shadow-blue-900/20 ring-1 ring-white/5;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-3000 {
+    animation-delay: 3s;
+  }
+
+  .animation-delay-5000 {
+    animation-delay: 5s;
+  }
+
+  @keyframes marquee-right {
+    0% {
+      transform: translateX(-50%);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-marquee-right {
+    animation: marquee-right 80s linear infinite;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes spin-slow {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 10s linear infinite;
+  }
+
+  @keyframes gradient-flow {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient-flow {
+    animation: gradient-flow 6s ease infinite;
+  }
+
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  /* ========== RESPONSIVE UTILITIES ========== */
+  
+  /* Container responsivo seguro para áreas táctiles */
+  .touch-safe {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Texto responsivo que escala suavemente */
+  .text-responsive-xs {
+    @apply text-[10px] sm:text-xs;
+  }
+
+  .text-responsive-sm {
+    @apply text-xs sm:text-sm;
+  }
+
+  .text-responsive-base {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-lg {
+    @apply text-base sm:text-lg md:text-xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-lg sm:text-xl md:text-2xl;
+  }
+
+  .text-responsive-2xl {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  .text-responsive-3xl {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  .text-responsive-hero {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
+  }
+
+  /* Espaciado responsivo */
+  .padding-responsive {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .gap-responsive {
+    @apply gap-4 sm:gap-6 md:gap-8 lg:gap-10;
+  }
+
+  .section-padding {
+    @apply py-12 sm:py-16 md:py-20 lg:py-24;
+  }
+
+  /* Grid responsivo */
+  .grid-responsive-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2;
+  }
+
+  .grid-responsive-3 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .grid-responsive-4 {
+    @apply grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+
+  /* Ocultar elementos según tamaño */
+  .mobile-only {
+    @apply block sm:hidden;
+  }
+
+  .tablet-up {
+    @apply hidden sm:block;
+  }
+
+  .desktop-only {
+    @apply hidden lg:block;
+  }
+
+  /* Alturas responsivas */
+  .h-responsive-card {
+    @apply h-[300px] sm:h-[350px] md:h-[400px] lg:h-[450px];
+  }
+
+  .h-responsive-hero {
+    @apply h-[60vh] sm:h-[70vh] md:h-[75vh] lg:h-[80vh];
+  }
+
+  /* Safe area para dispositivos con notch */
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Ajustes de scroll suave */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Mejoras para inputs en móviles */
+  input, textarea, button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Evitar zoom en inputs iOS */
+  @media screen and (max-width: 768px) {
+    input, textarea, select {
+      font-size: 16px !important;
+    }
+  }
+}

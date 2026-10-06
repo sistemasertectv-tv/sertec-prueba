@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Network, Cctv, Cable, Tv, Zap, PenTool, CheckCircle, X, ArrowRight, LogIn, Plus, Trash2, Save, Loader2, ImageIcon, LayoutGrid } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { servicePages } from '../lib/content';
 import { supabase } from '../lib/supabase';
 
 interface ServiceItem {
@@ -198,6 +199,11 @@ const Services: React.FC = () => {
           <p className="text-xl text-slate-400 max-w-2xl mx-auto font-light">
             Infraestructura crítica y conectividad de alto nivel para el sector hotelero.
           </p>
+          <ul className="mt-8 flex flex-wrap justify-center gap-3" aria-label="Páginas de servicio">
+            {servicePages.map(sp => (
+              <li key={sp.slug}><Link to={`/servicios/${sp.slug}`} className="inline-block rounded-md border border-white/15 hover:border-blue-500/60 px-4 py-2 text-sm text-slate-200 hover:text-white transition-colors">{sp.name}</Link></li>
+            ))}
+          </ul>
         </div>
       </section>
 

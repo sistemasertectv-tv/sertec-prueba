@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, Volume2, VolumeX, Maximize2, Video, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -33,6 +33,16 @@ export const CorporateVideoShowcase: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [near, setNear] = useState(false);
+
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') { setNear(true); return; }
+    const io = new IntersectionObserver((e) => { if (e[0].isIntersecting) { setNear(true); io.disconnect(); } }, { rootMargin: '400px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -131,19 +141,20 @@ export const CorporateVideoShowcase: React.FC = () => {
             </div>
 
             {/* Video Container 16:9 */}
-            <div className="relative aspect-video w-full bg-black overflow-hidden flex items-center justify-center">
-              <video
+            <div ref={boxRef} className="relative aspect-video w-full bg-black overflow-hidden flex items-center justify-center">
+              {near && <video
                 ref={videoRef}
                 key={selectedVideo.src}
                 src={selectedVideo.src}
                 autoPlay
+                preload="metadata"
                 loop
                 muted={isMuted}
                 playsInline
                 className="w-full h-full object-contain"
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
-              />
+              />}
 
               {/* Botón flotante central de Play/Pause en hover o cuando está pausado */}
               <button

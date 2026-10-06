@@ -17,7 +17,6 @@ const navItems: NavItem[] = [
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
@@ -29,11 +28,20 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => { setIsOpen(false); }, [location.pathname]);
+  useEffect(() => {
+    if (!isOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') setIsOpen(false); };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [isOpen]);
+
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const isActive = (path: string) => {
     if (path === '/' && location.pathname !== '/') return false;
-    return location.pathname === path;
+    if (path === '/') return location.pathname === '/';
+    return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
   return (
@@ -58,7 +66,7 @@ const Navbar: React.FC = () => {
           </Link>
 
           {/* Desktop Menu - REIMAGINED */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2 relative" aria-label="Menú principal">
+          <nav className="hidden xl:flex items-center gap-1 lg:gap-2 relative" aria-label="Menú principal">
             {navItems.map((item) => (
               <Link
                 key={item.path}
@@ -98,11 +106,12 @@ const Navbar: React.FC = () => {
           </nav>
 
           {/* Mobile Actions: ThemeToggle + WhatsApp + Burger */}
-          <div className="flex md:hidden items-center space-x-2">
+          <div className="flex xl:hidden items-center space-x-2">
             <a
               href="https://wa.me/18298778369"
               target="_blank"
               rel="noreferrer"
+              aria-label="Escribir a SERTEC por WhatsApp"
               className="p-2.5 bg-green-600/10 border border-green-500/20 rounded-xl"
             >
               <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white relative z-10" xmlns="http://www.w3.org/2000/svg">
@@ -110,6 +119,10 @@ const Navbar: React.FC = () => {
               </svg>
             </a>
             <button
+              type="button"
+              aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
               onClick={toggleMenu}
               className="text-slate-300 hover:text-white transition-colors p-2.5 bg-blue-500/10 rounded-xl border border-blue-500/20"
             >
@@ -129,7 +142,10 @@ const Navbar: React.FC = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-slate-950 border-t border-blue-500/20 overflow-hidden shadow-xl"
+              id="mobile-navigation"
+              role="navigation"
+              aria-label="Menú móvil"
+              className="xl:hidden max-h-[calc(100dvh-80px)] overflow-y-auto bg-slate-950 border-t border-blue-500/20 shadow-xl"
             >
               <div className="px-6 py-8 space-y-4">
                 {navItems.map((item, idx) => (

@@ -107,6 +107,8 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setSubmitSuccess(false);
     setIsSubmitting(true);
 
     try {
@@ -127,7 +129,7 @@ const Contact: React.FC = () => {
 
       // Enviar notificación instantánea al correo sertectv@gmail.com
       try {
-        await fetch("https://formsubmit.co/ajax/sertectv@gmail.com", {
+        const notification = await fetch("https://formsubmit.co/ajax/sertectv@gmail.com", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -142,6 +144,7 @@ const Contact: React.FC = () => {
             _template: "table"
           })
         });
+        if (!notification.ok) throw new Error(`Notificación de correo: HTTP ${notification.status}`);
       } catch (emailErr) {
         console.warn("No se pudo enviar el correo de notificación:", emailErr);
       }

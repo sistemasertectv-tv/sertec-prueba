@@ -13,7 +13,7 @@ export const SertecLogo: React.FC<SertecLogoProps> = ({
   imgClassName = 'h-9 sm:h-10',
   priority = false,
 }) => (
-  <span className={`inline-flex items-center select-none ${className}`}>
+  <span className={`inline-flex flex-col items-start select-none ${className}`}>
     <img
       src="/brand/sertec-logo.webp"
       width={1049}
@@ -24,6 +24,7 @@ export const SertecLogo: React.FC<SertecLogoProps> = ({
       draggable={false}
       className={`${imgClassName} w-auto object-contain`}
     />
+    <span className="sertec-logo-tagline">Conectividad Sin Fronteras</span>
   </span>
 );
 

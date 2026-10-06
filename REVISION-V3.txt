@@ -1,0 +1,13 @@
+REVISIÓN ESTÁTICA V3
+
+PASS: referencias de imports locales resueltas.
+PASS: rutas literales de Link coinciden con rutas declaradas.
+PASS: recursos locales literales referenciados existentes.
+PASS: todas las imágenes locales decodificables.
+PASS: dependencias de package.json coinciden con el bloque raíz de package-lock.json.
+PASS: paquete nativo Windows de Rollup presente en lockfile con versión 4.56.0, coincidente con Rollup.
+PASS: título, párrafo, CTAs y eslogan solicitados incorporados.
+PASS: sin enlaces href="#" en el pie.
+
+NO EJECUTADO: compilación, TypeScript, renderizado de navegador, interacciones y pruebas externas (entorno sin Node/npm ni red).
+No se afirma que toda la web esté funcional: esa comprobación necesita npm run check, npm run build y pruebas en navegador y con los servicios reales.

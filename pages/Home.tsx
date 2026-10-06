@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { HeroCamera } from '../components/ui/hero-camera';
 import { EngineeringMethodology } from '../components/ui/engineering-methodology';
 import { HotelClientsMarquee } from '../components/ui/hotel-clients-marquee';
+import { RealWorks, GuidesSection, QuickQuote } from '../components/ui/home-extras';
 import { CorporateVideoShowcase } from '../components/ui/corporate-video-showcase';
 
 const reveal = {
@@ -30,25 +31,28 @@ const services = [
   {
     n: '01',
     id: 'cams-section',
-    src: 'https://res.cloudinary.com/dgjnnstkd/image/upload/v1785097767/ChatGPT_Image_26_jul_2026_04_28_57_p.m._ae2nwu.png',
+    src: 'https://res.cloudinary.com/dgjnnstkd/image/upload/f_auto,q_auto,w_900/v1785097767/ChatGPT_Image_26_jul_2026_04_28_57_p.m._ae2nwu.png',
     title: 'Videovigilancia AI',
     targetService: 'Cámaras de Seguridad',
+    page: '/servicios/videovigilancia-cctv-ia',
     description: 'Sistemas inteligentes con reconocimiento facial y análisis térmico avanzado para hoteles.',
   },
   {
     n: '02',
     id: 'fiber-section',
-    src: 'https://res.cloudinary.com/dgjnnstkd/image/upload/v1767456269/Image_202601031202_fllr6s.jpg',
+    src: 'https://res.cloudinary.com/dgjnnstkd/image/upload/f_auto,q_auto,w_900/v1767456269/Image_202601031202_fllr6s.jpg',
     title: 'Fibra Óptica GPON',
     targetService: 'Red GPON',
+    page: '/servicios/fibra-optica-gpon-hoteles',
     description: 'Redes pasivas de alta velocidad para máxima densidad de usuarios y conectividad robusta.',
   },
   {
     n: '03',
     id: 'networks-section',
-    src: 'https://res.cloudinary.com/dgjnnstkd/image/upload/v1767457367/Whisk_e90192da8cd89b3b949495dd1f832f65dr_1_mtm15e.jpg',
+    src: 'https://res.cloudinary.com/dgjnnstkd/image/upload/f_auto,q_auto,w_900/v1767457367/Whisk_e90192da8cd89b3b949495dd1f832f65dr_1_mtm15e.jpg',
     title: 'Redes Corporativas',
     targetService: 'Canalización',
+    page: '/servicios/canalizacion-industrial',
     description: 'Infraestructura de telecomunicaciones robusta y certificada para entornos industriales.',
   },
 ];
@@ -63,12 +67,12 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    document.title = 'SERTEC | Fibra GPON, Videovigilancia y Redes para Hoteles - Santo Domingo';
+    document.title = 'SERTEC | Conectividad y Seguridad para Hoteles e Industria en RD y el Caribe';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute(
         'content',
-        'SERTEC - Soluciones de fibra GPON, videovigilancia AI y redes corporativas para hoteles en República Dominicana. 15 años de experiencia. Clientes: Meliá, Iberostar, Dreams. Llámanos: 1829 877 8369.'
+        'Fibra óptica GPON, videovigilancia CCTV con IA, cableado estructurado e IPTV para hoteles, resorts e industria en República Dominicana y el Caribe. Más de 15 años de experiencia.'
       );
     }
   }, []);
@@ -104,14 +108,13 @@ const Home: React.FC = () => {
       opens: '08:00',
       closes: '18:00',
     },
-    priceRange: '$$',
   };
 
   return (
     <main className="flex-col w-full bg-[#04070d]">
       <script type="application/ld+json">{JSON.stringify(schemaData)}</script>
 
-      <section aria-label="SERTEC: fibra GPON, videovigilancia y redes para hoteles">
+      <section aria-label="SERTEC: fibra GPON, videovigilancia y redes para hoteles e industria">
         <HeroCamera />
       </section>
 
@@ -145,18 +148,26 @@ const Home: React.FC = () => {
                 transition={{ duration: 0.7, delay: idx * 0.1 }}
                 className="group flex flex-col rounded-xl bg-slate-900/40 border border-white/10 hover:border-blue-500/50 overflow-hidden transition-colors"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-slate-900">
+                <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
+                  <img
+                    src={s.src}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover scale-125 blur-2xl opacity-40"
+                  />
                   <img
                     src={s.src}
                     alt={`${s.title} para hoteles - SERTEC`}
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1558494949-efc5e60dc19f?q=80&w=800&auto=format&fit=crop';
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/infraestructura_15_anos_sertec.jpg';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                   <span className="absolute top-4 left-4 font-display text-sm font-semibold tabular-nums text-white/80">{s.n}</span>
                 </div>
                 <div className="flex flex-col flex-1 p-6 sm:p-7">
@@ -170,6 +181,7 @@ const Home: React.FC = () => {
                     Solicitar este servicio
                     <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
                   </button>
+                  <Link to={s.page} className="mt-3 text-sm text-slate-400 hover:text-white underline underline-offset-4 w-fit">Más información</Link>
                 </div>
               </motion.article>
             ))}
@@ -180,7 +192,7 @@ const Home: React.FC = () => {
       {/* 02 · Centro de monitoreo */}
       <section className="relative py-20 sm:py-28 border-t border-white/5 bg-gradient-to-b from-[#04070d] via-slate-950 to-[#04070d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          <motion.div {...reveal} className="lg:col-span-7 order-2 lg:order-1">
+          <motion.div {...reveal} className="lg:col-span-6 order-2 lg:order-1">
             <figure className="relative rounded-xl overflow-hidden border border-white/10 bg-slate-900/60">
               <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 text-[11px] uppercase tracking-[0.2em]">
                 <span className="text-slate-300 font-semibold">Centro de Operaciones SERTEC</span>
@@ -192,6 +204,8 @@ const Home: React.FC = () => {
               <img
                 src="/centro_monitoreo_sertec.jpg"
                 alt="Centro de monitoreo SERTEC con videovigilancia 24/7"
+                width={1024}
+                height={1024}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-auto block"
@@ -199,7 +213,7 @@ const Home: React.FC = () => {
             </figure>
           </motion.div>
 
-          <div className="lg:col-span-5 order-1 lg:order-2">
+          <div className="lg:col-span-6 order-1 lg:order-2">
             <SectionHead
               index="02"
               label="Control operativo continuo"
@@ -255,6 +269,8 @@ const Home: React.FC = () => {
               <img
                 src="/infraestructura_15_anos_sertec.jpg"
                 alt="Infraestructura de telecomunicaciones y fibra óptica instalada por SERTEC"
+                width={1491}
+                height={1055}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-auto block"
@@ -267,6 +283,9 @@ const Home: React.FC = () => {
       <CorporateVideoShowcase />
       <EngineeringMethodology />
       <HotelClientsMarquee />
+      <RealWorks />
+      <GuidesSection />
+      <QuickQuote />
 
       {/* Cierre con llamada a la acción */}
       <section className="relative overflow-hidden py-20 sm:py-28 border-t border-white/5">
@@ -276,7 +295,7 @@ const Home: React.FC = () => {
           style={{ background: 'radial-gradient(50% 70% at 50% 100%, rgba(37,99,235,0.22), rgba(4,7,13,0) 70%)' }}
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-          <motion.div {...reveal} className="lg:col-span-7">
+          <motion.div {...reveal} className="lg:col-span-6">
             <h2 className="font-display font-bold text-white tracking-[-0.02em] leading-[1.03] text-4xl sm:text-5xl lg:text-6xl">
               Hablemos de la infraestructura <span className="text-slate-500">de su próximo proyecto.</span>
             </h2>

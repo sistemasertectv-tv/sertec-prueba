@@ -1,7 +1,8 @@
 import React from 'react';
 import { SertecLogo } from '../ui/SertecLogo';
-import { MapPin, Phone, Mail, Facebook, Instagram, MessageCircle, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageCircle, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { servicePages } from '../../lib/content';
 
 const Footer: React.FC = () => {
   return (
@@ -21,13 +22,13 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-4">
               {[
-                { icon: <Facebook size={18} />, href: "#", color: "hover:bg-blue-600" },
-                { icon: <Instagram size={18} />, href: "#", color: "hover:bg-pink-600" },
                 { icon: <MessageCircle size={18} />, href: "https://wa.me/18298778369", color: "hover:bg-green-500" }
               ].map((social, i) => (
                 <a
                   key={i}
                   href={social.href}
+                  aria-label="Contactar a SERTEC por WhatsApp"
+                  target="_blank" rel="noopener noreferrer"
                   className={`w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center transition-all duration-300 ${social.color} hover:text-white hover:scale-110 border border-white/10 hover:border-transparent text-slate-400`}
                 >
                   {social.icon}
@@ -52,6 +53,12 @@ const Footer: React.FC = () => {
                 </li>
               ))}
             </ul>
+            <h3 className="pt-2 text-sm font-black uppercase tracking-[0.2em] text-white">Servicios</h3>
+            <ul className="space-y-3">
+              {servicePages.map(sp => (
+                <li key={sp.slug}><Link to={`/servicios/${sp.slug}`} className="text-slate-400 hover:text-blue-400 text-sm transition-colors">{sp.name}</Link></li>
+              ))}
+            </ul>
           </div>
 
           {/* Contact Info */}
@@ -72,8 +79,8 @@ const Footer: React.FC = () => {
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <a href="tel:18298778369" className="text-slate-400 hover:text-white text-sm transition-colors font-medium">1 829 877 8369</a>
-                  <a href="tel:8498535122" className="text-slate-400 hover:text-white text-sm transition-colors font-medium">849 853 5122</a>
-                  <a href="tel:8099891535" className="text-slate-400 hover:text-white text-sm transition-colors font-medium">809 989 1535</a>
+                  <a href="tel:+18498535122" className="text-slate-400 hover:text-white text-sm transition-colors font-medium">849 853 5122</a>
+                  <a href="tel:+18099891535" className="text-slate-400 hover:text-white text-sm transition-colors font-medium">809 989 1535</a>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -111,8 +118,8 @@ const Footer: React.FC = () => {
             &copy; {new Date().getFullYear()} SERTEC CONECTIVIDAD. TODOS LOS DERECHOS RESERVADOS.
           </p>
           <div className="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-6 md:gap-8">
-            <a href="#" className="text-[10px] font-bold text-slate-500 hover:text-white tracking-widest uppercase transition-colors">Política de Privacidad</a>
-            <a href="#" className="text-[10px] font-bold text-slate-500 hover:text-white tracking-widest uppercase transition-colors">Términos de Servicio</a>
+            <a href="mailto:contacto@sertectv.com?subject=Consulta%20de%20privacidad" className="text-[10px] font-bold text-slate-500 hover:text-white tracking-widest uppercase transition-colors">Consulta de privacidad</a>
+            <Link to="/contacto" className="text-[10px] font-bold text-slate-500 hover:text-white tracking-widest uppercase transition-colors">Información comercial</Link>
           </div>
         </div>
       </div>

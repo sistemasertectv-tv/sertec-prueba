@@ -25,6 +25,7 @@ export const syncSeo = (pathname: string) => {
     document.head.appendChild(link);
   }
   link.href = url;
+  document.querySelectorAll<HTMLLinkElement>('link[rel="alternate"][hreflang]').forEach(el => { el.href = url; });
 
   setMeta('meta[property="og:url"]', 'property', 'og:url', url);
   setMeta('meta[property="og:title"]', 'property', 'og:title', title);
@@ -32,4 +33,28 @@ export const syncSeo = (pathname: string) => {
   setMeta('meta[name="twitter:url"]', 'name', 'twitter:url', url);
   setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
   setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
+};
+
+/** Inserta o reemplaza un bloque JSON-LD en <head>. Devuelve la función de limpieza. */
+export const setJsonLd = (id: string, data: unknown) => {
+  let el = document.head.querySelector<HTMLScriptElement>(`script[data-jsonld="${id}"]`);
+  if (!el) {
+    el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.setAttribute('data-jsonld', id);
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(data);
+  return () => { el?.remove(); };
+};
+
+export const setPageMeta = (title: string, description: string) => {
+  document.title = title;
+  let m = document.head.querySelector<HTMLMetaElement>('meta[name="description"]');
+  if (!m) {
+    m = document.createElement('meta');
+    m.setAttribute('name', 'description');
+    document.head.appendChild(m);
+  }
+  m.setAttribute('content', description);
 };

@@ -1,2 +1,2 @@
-const os = require('os');
-console.log(`[Prebuild] Entorno detectado: ${os.platform()} (${os.arch()}). Preparando compilación Vite...`);
+// No instalar paquetes durante una compilación. npm install/ci resuelve los binarios nativos.
+console.log('SERTEC: preparando compilación con las dependencias ya instaladas.');

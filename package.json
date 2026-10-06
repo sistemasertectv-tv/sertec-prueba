@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "node ./scripts/prebuild.cjs && vite build",
     "preview": "vite preview",
-    "deploy": "node ./scripts/prebuild.cjs && vite build && node deploy.cjs"
+    "deploy": "node ./scripts/prebuild.cjs && vite build && node deploy.cjs",
+    "check": "tsc --noEmit"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -27,12 +28,6 @@
     "react-router-dom": "^7.11.0",
     "tailwind-merge": "^3.4.0",
     "three": "^0.182.0"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.56.0",
-    "@rollup/rollup-win32-x64-msvc": "^4.56.0",
-    "@esbuild/linux-x64": "0.24.0",
-    "@esbuild/win32-x64": "0.24.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

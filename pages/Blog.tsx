@@ -3,6 +3,8 @@ import { BlogPost } from '../types';
 import { Clock, Calendar, X, Plus, LogIn, Save, Shield, Sparkles, Loader2, CheckCircle2, Eye, Image as ImageIcon, Wand2, Trash2, Zap, ArrowRight, Link2 as LinkIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../lib/supabase';
+import { Link } from 'react-router-dom';
+import { guidePages } from '../lib/content';
 
 
 // Configuración de la IA (Gemini API)
@@ -363,6 +365,19 @@ const Blog: React.FC = () => {
           </h1>
         </motion.div>
 
+        <section className="mb-14" aria-label="Guías técnicas de SERTEC">
+          <h2 className="text-white text-xl font-bold mb-5">Guías técnicas</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {guidePages.map(g => (
+              <Link key={g.slug} to={`/blog/${g.slug}`} className="group rounded-xl border border-white/10 hover:border-blue-500/50 bg-slate-900/40 p-5 transition-colors">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{g.readTime} de lectura</p>
+                <h3 className="mt-2 font-bold text-white">{g.title}</h3>
+                <span className="mt-3 inline-flex items-center gap-2 text-sm text-blue-400 group-hover:text-white">Leer guía <ArrowRight size={14} aria-hidden="true" /></span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         {/* FEED DE BLOG: 2 COLUMNAS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
           {posts.map((post) => (
@@ -389,7 +404,8 @@ const Blog: React.FC = () => {
                   alt={post.title}
                   referrerPolicy="no-referrer"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = `/blog/blog-${post.id}.jpg`;
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/blog/blog-1.jpg';
                   }}
                   className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
                 />
@@ -431,10 +447,11 @@ const Blog: React.FC = () => {
                   src={selectedPost.image}
                   referrerPolicy="no-referrer"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = `/blog/blog-${selectedPost.id}.jpg`;
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/blog/blog-1.jpg';
                   }}
                   className="w-full h-full object-cover"
-                  alt=""
+                  alt={selectedPost.title}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
               </div>
